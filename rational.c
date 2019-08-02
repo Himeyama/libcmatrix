@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "mlib.c"
+#include "sqrt.c"
 
 typedef struct rational{
-    int numerator, denominator;
+    long numerator, denominator;
 } rational;
 
 /* 約分 */
@@ -15,7 +16,7 @@ void reduction(rational *r){
 }
 
 void print_rational(rational r){
-    printf("(%d/%d)\n", r.numerator, r.denominator);
+    printf("(%ld/%ld)\n", r.numerator, r.denominator);
 }
 
 /* 有理数の和 */
@@ -36,4 +37,15 @@ rational rproductr(rational r0, rational r1){
     r.denominator = r0.denominator * r1.denominator;
     reduction(&r);
     return r;
+}
+
+/* 平方根 */
+rational rsqrt(rational r){
+    rational r0;
+    double d = r.numerator/r.denominator;
+    double x = sqrt(d);
+    r0.numerator = x*100000000000000;
+    r0.denominator = 100000000000000;
+    reduction(&r0);
+    return r0;
 }

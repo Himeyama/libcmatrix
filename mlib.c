@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 /* 最大公約数 */
-int gcd(int a, int b){
-    int r = 1;
+long gcd(long a, long b){
+    long r = 1;
     while(r){
         r = a % b;
         a = b;
@@ -12,6 +12,6 @@ int gcd(int a, int b){
 }
 
 /* 最小公倍数 */
-int lcm(int a, int b){
+long lcm(long a, long b){
     return a * b / gcd(a, b);
 }

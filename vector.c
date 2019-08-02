@@ -15,7 +15,8 @@ void print_vector(vector v){
     _vector *p = v.vector;
     printf("[\n");
     for(i=0; i<v.size; i++){
-        printf("    (%d/%d)\n", p[i].numerator, p[i].denominator );
+        printf("    ");
+        print_rational(v.vector[i]);
     }
     printf("]\n");
 }
@@ -94,10 +95,18 @@ vector inverse_vector(vector v){
 }
 
 /* 内積 */
-rational inner_product_vector(struct vector *v0, struct vector *v1){
+rational inner_product_vector(struct vector v0, struct vector v1){
     int i;
     rational sum = {0, 1};
-    for(i=0; i<v1 -> size; i++)
-        sum = rplusr(sum, rproductr((v0 -> vector)[i], (v1 -> vector)[i]));
+    for(i=0; i<v1.size; i++)
+        sum = rplusr(sum, rproductr((v0.vector)[i], (v1.vector)[i]));
     return sum;
+}
+
+/* ノルム */
+rational norm(struct vector v){
+    rational sum = {0, 1};
+    rational r;
+    r = inner_product_vector(v, v);
+    return rsqrt(r);
 }
