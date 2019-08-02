@@ -6,10 +6,12 @@ int main(void){
     vector v4 = vector_new(a4, sizeof(a4)/sizeof(rational));
     rational a5[] = {{4,1},{5,1},{6,1}};
     vector v5 = vector_new(a5, sizeof(a5)/sizeof(rational));
-    print_vector(v4);
-    print_vector(v5);
 
-    print_rational(inner_product_vector(&v4, &v5));
+    print_vector(scalar_product_vector(v4, -1));
+    print_vector(v4);
+
+    print_vector(inverse_vector(v5));
+    print_vector(v5);
     
     return 0;
 }
