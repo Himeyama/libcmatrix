@@ -7,6 +7,8 @@ class Vector{
         NUM* vector;
         int size;
 
+        Vector(){}
+
         Vector(int n){
             size = n;
             vector = new NUM[n];
@@ -51,21 +53,19 @@ class Matrix{
 
         Matrix(int n){
             size = n;
-            matrix = new Vector<NUM>(n);
+            matrix = new Vector<NUM>[n];
             for(int i = 0; i < n; i++){
-                Vector<NUM> vector = Vector<NUM>(n);
-                vector.size = n;
-                matrix[i] = vector;
+                matrix[i] = Vector<NUM>(n);
+                matrix[i].size = n;
             }
         }
 
         Matrix(int r, int c){
             size = r;
-            matrix = new Vector<NUM>(r);
+            matrix = new Vector<NUM>[r];
             for(int i = 0; i < c; i++){
-                Vector<NUM> vector = Vector<NUM>(c);
-                vector.size = c;
-                matrix[i] = vector;
+                matrix[i] = Vector<NUM>(c);
+                matrix[i].size = c;
             }
 
         }
@@ -108,9 +108,8 @@ class Matrix{
         static Matrix identity(int n){
             Matrix mat(n);
             for(int i = 0; i < n; i++)
-                for(int j = 0; j < n; j++){
+                for(int j = 0; j < n; j++)
                     mat.matrix[i][j] = i == j ? 1 : 0;
-                }
             return mat;
         }
 
