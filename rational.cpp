@@ -10,7 +10,19 @@ class Rational{
             denominator = 1;
         }
 
+        Rational(double f){
+            int n;
+            numerator = std::ldexp(std::frexp(f, &n), __DBL_MANT_DIG__);
+            denominator = numerator / f;
+            reduction();
+        }
+
         Rational(long n){
+            numerator = n;
+            denominator = 1;
+        }
+
+        Rational(int n){
             numerator = n;
             denominator = 1;
         }
@@ -68,3 +80,21 @@ class Rational{
             std::cout << inspect() << std::endl;
         }
 };
+
+Rational operator "" _r(const char* s){
+    Rational r(0);
+    int p = 0;
+    for(int i = 0; s[i]; i++){
+        char c = s[i];
+        if(c != '.'){
+            r.numerator *= 10;
+            r.numerator += (long)(c - '0');
+            p++;
+        }else{
+            p = 0;
+        }
+    }
+    r.denominator = std::pow(10, p);
+    r.reduction();
+    return r;
+}
