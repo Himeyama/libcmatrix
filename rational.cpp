@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 
 class Rational{
     public:
@@ -44,9 +45,22 @@ class Rational{
             return r.reduction();
         }
 
+        Rational operator +=(Rational a){
+            return *this = *this + a;
+        }
+
         Rational operator -(Rational a){
             a.numerator *= -1;
             return *this + a;
+        }
+
+        Rational operator -(){
+            numerator *= -1;
+            return *this;
+        }
+
+        Rational operator -=(Rational a){
+            return *this = *this - a;
         }
 
         Rational operator *(Rational a){
@@ -57,6 +71,10 @@ class Rational{
             return r.reduction();
         }
 
+        Rational operator *=(Rational a){
+            return *this = *this * a;
+        }
+
         Rational operator /(Rational a){
             long tmp = a.numerator;
             a.numerator = a.denominator;
@@ -64,16 +82,27 @@ class Rational{
             return *this * a;
         }
 
+        Rational operator /=(Rational a){
+            return *this = *this / a;
+        }
+
         Rational reduction(){
             long gcd = Rational::gcd(numerator, denominator);
-            if(gcd < 0) gcd *= -1;
             numerator /= gcd;
             denominator /= gcd;
+            if(denominator < 0){
+                denominator *= -1;
+                numerator *= -1;
+            }
             return *this;
         }
 
         std::string inspect(){
             return "(" + std::to_string(numerator) + "/" + std::to_string(denominator) + ")";
+        }
+
+        double to_f(){
+            return (double)numerator / denominator;
         }
 
         void p(){
@@ -84,6 +113,7 @@ class Rational{
 Rational operator "" _r(const char* s){
     Rational r(0);
     int p = 0;
+    bool flag = true;
     for(int i = 0; s[i]; i++){
         char c = s[i];
         if(c != '.'){
@@ -92,9 +122,16 @@ Rational operator "" _r(const char* s){
             p++;
         }else{
             p = 0;
+            flag = false;
         }
     }
     r.denominator = std::pow(10, p);
+    if(flag) r.denominator = 1;
     r.reduction();
     return r;
+}
+
+std::ostream & operator <<(std::ostream& s, Rational r){
+    s << "(" << r.numerator << "/" << r.denominator << ")";
+    return s;
 }

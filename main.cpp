@@ -4,8 +4,12 @@
 #include "matrix.cpp"
 
 int main(){
-    Rational c = 100.1_r;
-    c.p();
+    Matrix<Rational> v = {{1_r, 2_r},{3_r, 4_r}};
+    v.about();
+
+    // (v + v).p();
+
+    // std::cout << 1_r << std::endl;
     
     // std::cout << 1.0 << std::endl;
 

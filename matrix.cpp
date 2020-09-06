@@ -51,10 +51,17 @@ class Vector{
             return sum; 
         }
 
+        Vector operator +(Vector vec){
+            Vector v(size());
+            for(int i = 0; i < size(); i++)
+                v[i] = vector[i] + vec[i];
+            return v;
+        }
+
         Vector(std::initializer_list<NUM> list){
             vector = list;
             int i = 0;
-            for(int value: list)
+            for(NUM value: list)
                 vector[i++] = value;
         }
 
